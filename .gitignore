@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+instance/
+.env
+venv/
+GeoLite2-City.mmdb  # Large file, better to download manually
