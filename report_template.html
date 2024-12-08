@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Analysis Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+        .report-content {
+            margin: 20px;
+        }
+        .section-title {
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .section-content {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .classification {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .malicious {
+            color: red;
+        }
+        .suspicious {
+            color: orange;
+        }
+        .legitimate {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Email Analysis Report</h1>
+    <div class="report-content">
+        <div class="section-title">Final Classification:</div>
+        <div class="section-content classification 
+            {% if 'malicious' in results['Final Classification'].lower() %}malicious{% elif 'suspicious' in results['Final Classification'].lower() %}suspicious{% else %}legitimate{% endif %}">
+            {{ results['Final Classification'] }}
+        </div>
+
+        <div class="section-title">SPF:</div>
+        <div class="section-content">{{ results['SPF'] }}</div>
+
+        <div class="section-title">DKIM:</div>
+        <div class="section-content">{{ results['DKIM'] }}</div>
+
+        <div class="section-title">DMARC:</div>
+        <div class="section-content">{{ results['DMARC'] }}</div>
+
+        <div class="section-title">IP Address:</div>
+        <div class="section-content">{{ results['IP Address'] }}</div>
+
+        <div class="section-title">IP Geolocation:</div>
+        <div class="section-content">
+            City: {{ results['IP Geolocation']['City'] }}<br>
+            Country: {{ results['IP Geolocation']['Country'] }}<br>
+            Latitude: {{ results['IP Geolocation']['Latitude'] }}<br>
+            Longitude: {{ results['IP Geolocation']['Longitude'] }}
+        </div>
+
+        <div class="section-title">Extracted URLs:</div>
+        <div class="section-content">
+            {% for url in results['Extracted URLs'] %}
+            <p>{{ url }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-title">URL Analysis:</div>
+        <div class="section-content">
+            {% for analysis in results['URL Analysis'] %}
+            <p>{{ analysis }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-title">Domain Reputation:</div>
+        <div class="section-content">
+            {% for key, value in results['Domain Reputation'].items() %}
+            <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-title">Attachment Analysis:</div>
+        <div class="section-content">{{ results['Attachment Analysis'] }}</div>
+    </div>
+</body>
+</html>
